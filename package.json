@@ -1,0 +1,15 @@
+{
+  "name": "node-rpsls",
+  "version": "0.0.1",
+  "description": "Create a module-based command line Node.js package",
+  "main": "./lib/rpsls.js",
+  "scripts": {
+    "test": "node ./lib/rpsls.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:comp426-2023-spring/a03-spring/a03-Indyya.git"
+  },
+  "author": "@indyya",
+  "license": "GPL-3.0-or-later"
+}

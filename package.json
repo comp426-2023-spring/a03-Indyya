@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Create a module-based command line Node.js package",
   "main": "./lib/rpsls.js",
+  "type": "module",
   "scripts": {
     "test": "node ./lib/rpsls.js"
   },
@@ -10,6 +11,14 @@
     "type": "git",
     "url": "git@github.com:comp426-2023-spring/a03-spring/a03-Indyya.git"
   },
+  "bin": {
+    "node-rps": "./bin/rps-cli.js",
+    "node-rpsls": "./bin/rpsls-cls.js"
+  },
   "author": "@indyya",
-  "license": "GPL-3.0-or-later"
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "minimist": "^1.2.8",
+    "yargs": "^17.7.2"
+  }
 }

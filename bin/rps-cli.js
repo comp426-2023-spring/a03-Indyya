@@ -1,52 +1,31 @@
 #!/usr/bin/env node
 
-import { rps } from "./lib/rpsls.js";
-import yargs from "yargs";
+const { rps } = require('./lib/rpsls');
+const { program } = require('commander');
 
-const argv = yargs
-  .usage("Usage: $0 [options]")
-  .option("r", {
-    alias: "rules",
-    describe: "Print the rules of Rock Paper Scissors",
-  })
-  .option("h", {
-    alias: "help",
-    describe: "Print usage information",
-  })
-  .argv;
+program
+  .description('Play Rock Paper Scissors (RPS)')
+  .option('-r, --rules', 'display the rules and exit')
+  .arguments('[SHOT]')
+  .parse(process.argv);
 
-if (argv.rules) {
-  console.log(
-    "Rock beats Scissors\nScissors beats Paper\nPaper beats Rock"
-  );
-  process.exit();
+if (program.rules) {
+  console.log('Rules for Rock Paper Scissors:\n');
+  console.log('  - Scissors CUTS Paper');
+  console.log('  - Paper COVERS Rock');
+  console.log('  - Rock CRUSHES Scissors');
+  process.exit(0);
 }
 
-if (argv.help) {
-  console.log(
-    "Usage: rps-cli.js [options]\n\nOptions:\n  -r, --rules\tPrint the rules of Rock Paper Scissors\n  -h, --help\tPrint usage information"
-  );
-  process.exit();
-}
-
-const validShots = ["rock", "paper", "scissors"];
-const [playerShot, opponentShot] = process.argv.slice(2);
-
+let playerShot = program.args[0];
 if (!playerShot) {
-  console.error("Error: No player shot provided");
+  playerShot = rps().player;
+} else if (!['rock', 'paper', 'scissors'].includes(playerShot.toLowerCase())) {
+  console.error(`${playerShot} is out of range. Available options: rock, paper, scissors`);
+  console.log('\nUsage: node-rps [SHOT]\n\nPlay Rock Paper Scissors (RPS)\n');
   process.exit(1);
 }
 
-if (!validShots.includes(playerShot.toLowerCase())) {
-  console.error(`Error: ${playerShot} is not a valid shot`);
-  console.error("Valid shots: rock, paper, scissors");
-  process.exit(1);
-}
-
-const result = rps(playerShot.toLowerCase(), opponentShot);
-if (opponentShot) {
-  console.log(JSON.stringify(result));
-} else {
-  console.log(JSON.stringify({ player: result }));
-}
+const result = rps(playerShot.toLowerCase());
+console.log(JSON.stringify(result));
 
